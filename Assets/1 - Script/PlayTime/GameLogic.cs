@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 using TMPro;
 
+
 public class GameLogic : MonoBehaviour
 {
     // Respawn du joueur
@@ -23,6 +24,7 @@ public class GameLogic : MonoBehaviour
     public GameObject gameOverPannel;
     public GameObject pausePannel;
     public GameObject winPannel;
+    public GameObject fadePannel;
 
 
     public GameObject player;
@@ -46,11 +48,20 @@ public class GameLogic : MonoBehaviour
     public TMP_Text nbBodyText;
 
 
+    // Gestion de la victoire
+    public List<HighScoreEntry> scores;
     public TMP_Text timeWin;
+    public XMLManager mySave;
+    public TMP_Text textAreaRegister;
+    public GameObject registerArea; 
+
+    //Animation de mort
+    public Animator anim;
 
     // Start is called before the first frame update
     void Start()
     {
+        scores = mySave.LoadScores();
         spawnerBodyList = GameObject.FindGameObjectsWithTag("SpawnerBody");
         spawnerDirtyList = GameObject.FindGameObjectsWithTag("SpawnerDirtyThing");
 
@@ -65,11 +76,19 @@ public class GameLogic : MonoBehaviour
 
         if (nbBody == 0 && nbTask == 0)
         {
-            // Le joueur à gagné
             stopGame();
-            UpdateTimer(timeWin);
+            UpdateTimer(timeWin, maxTimeLeft - timeLeft);
+            registerArea.SetActive(true);
             winPannel.SetActive(true);
         }
+    }
+
+    public void RegisterNewScore()
+    {
+        AddNewScore(textAreaRegister.text, maxTimeLeft - timeLeft);
+        Debug.Log("Add New sxcore");
+        mySave.SaveScores(scores);
+        registerArea.SetActive(false);
     }
 
     public void Restart()
@@ -82,16 +101,18 @@ public class GameLogic : MonoBehaviour
         gameOverPannel.SetActive(false);
 
         lose = false;
-        UpdateTimer(timer);
+        UpdateTimer(timer, timeLeft);
         player.GetComponent<Rigidbody2D>().position = spawn.position;
 
         resumeGame();
     }
 
-    public void RestartLevel()
+    void RestartLevel()
     {
         nbTask = 0;
         nbBody = 0;
+
+        CleanLevel();
         // As voir comment déterminer le max ?
 
         int currentNbTask = Random.Range(3, maxNbTask);
@@ -118,13 +139,30 @@ public class GameLogic : MonoBehaviour
         // peux être joué avec deux liste ?
     }
 
+    void CleanLevel()
+    {
+        DestroyFromTag("ToCleanObject");
+        DestroyFromTag("MovingObject");
+    }
+
+    void DestroyFromTag(string tag)
+    {
+        GameObject[] objetToDestroy;
+
+        objetToDestroy = GameObject.FindGameObjectsWithTag(tag);
+        foreach (GameObject currentObject in objetToDestroy)
+        {
+            Destroy(currentObject);
+        }
+
+    }
 
     void FixedUpdate()
     {
         if (timerPlay)
         {
             timeLeft -= Time.deltaTime;
-            UpdateTimer(timer);
+            UpdateTimer(timer, timeLeft);
         }
 
         if (timeLeft < 0)
@@ -136,10 +174,10 @@ public class GameLogic : MonoBehaviour
 
     }
 
-    void UpdateTimer(TMP_Text currentText)
+    void UpdateTimer(TMP_Text currentText, float timeToUpdate)
     {
-        int minutes = Mathf.FloorToInt((timeLeft + 1) / 60);
-        int secondes = Mathf.FloorToInt((timeLeft + 1) % 60);
+        int minutes = Mathf.FloorToInt((timeToUpdate + 1) / 60);
+        int secondes = Mathf.FloorToInt((timeToUpdate + 1) % 60);
 
         currentText.text = string.Format("{0 : 00} : {1 : 00}", minutes, secondes);
     }
@@ -186,5 +224,31 @@ public class GameLogic : MonoBehaviour
             listToShuffle[i] = listToShuffle[rnd];
             listToShuffle[rnd] = temp;
         }
+    }
+
+
+    public void RespawnPlayer()
+    {
+        StartCoroutine(CoRoutineRespawnPlayer());
+    }
+
+    IEnumerator CoRoutineRespawnPlayer()
+    {
+        playerCtr.playerActive = false;
+        fadePannel.SetActive(true);
+        anim.Play("FadeOurt");
+
+        yield return new WaitForSeconds(1.5f);
+        player.GetComponent<Rigidbody2D>().position = spawn.position;
+        yield return new WaitForSeconds(1f);
+
+        fadePannel.SetActive(false);
+        playerCtr.playerActive = true;
+    }
+
+
+    void AddNewScore(string entryName, float entryScore)
+    {
+        scores.Add(new HighScoreEntry { name = entryName, temps = entryScore });
     }
 }
