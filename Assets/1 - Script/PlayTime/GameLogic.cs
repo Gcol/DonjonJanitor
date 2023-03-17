@@ -49,7 +49,7 @@ public class GameLogic : MonoBehaviour
 
 
     // Gestion de la victoire
-    public List<HighScoreEntry> scores;
+    public List<StatEntry> allStat;
     public TMP_Text timeWin;
     public XMLManager mySave;
     public TMP_Text textAreaRegister;
@@ -61,7 +61,7 @@ public class GameLogic : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        scores = mySave.LoadScores();
+        allStat = mySave.LoadStat();
         spawnerBodyList = GameObject.FindGameObjectsWithTag("SpawnerBody");
         spawnerDirtyList = GameObject.FindGameObjectsWithTag("SpawnerDirtyThing");
 
@@ -83,13 +83,6 @@ public class GameLogic : MonoBehaviour
         }
     }
 
-    public void RegisterNewScore()
-    {
-        AddNewScore(textAreaRegister.text, maxTimeLeft - timeLeft);
-        Debug.Log("Add New sxcore");
-        mySave.SaveScores(scores);
-        registerArea.SetActive(false);
-    }
 
     public void Restart()
     {
@@ -226,7 +219,6 @@ public class GameLogic : MonoBehaviour
         }
     }
 
-
     public void RespawnPlayer()
     {
         StartCoroutine(CoRoutineRespawnPlayer());
@@ -246,9 +238,4 @@ public class GameLogic : MonoBehaviour
         playerCtr.playerActive = true;
     }
 
-
-    void AddNewScore(string entryName, float entryScore)
-    {
-        scores.Add(new HighScoreEntry { name = entryName, temps = entryScore });
-    }
 }

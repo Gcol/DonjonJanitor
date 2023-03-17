@@ -4,10 +4,11 @@ using UnityEngine;
 using System.Xml.Serialization;
 using System.IO;
 
-public class HighScoreEntry
+public class StatEntry
 {
-    public string name;
-    public float temps;
+    public string type;
+    public int level;
+    public int xp;
 }
 
 public class XMLManager : MonoBehaviour
@@ -16,25 +17,26 @@ public class XMLManager : MonoBehaviour
     public Leaderboard leaderboard;
     void Awake()
     {
-        if (!Directory.Exists(Application.persistentDataPath + "/HighScores/"))
+        if (!Directory.Exists(Application.persistentDataPath + "/Stat/"))
         {
-            Directory.CreateDirectory(Application.persistentDataPath + "/HighScores/");
+            Directory.CreateDirectory(Application.persistentDataPath + "/Stat/");
         }
     }
-    public void SaveScores(List<HighScoreEntry> scoresToSave)
+    
+    public void SaveStat(List<StatEntry> scoresToSave)
     {
         leaderboard.list = scoresToSave;
         XmlSerializer serializer = new XmlSerializer(typeof(Leaderboard));
-        FileStream stream = new FileStream(Application.persistentDataPath + "/HighScores/highscores.xml", FileMode.Create);
+        FileStream stream = new FileStream(Application.persistentDataPath + "/Stat/PlayerStat.xml", FileMode.Create);
         serializer.Serialize(stream, leaderboard);
         stream.Close();
     }
-    public List<HighScoreEntry> LoadScores()
+    public List<StatEntry> LoadStat()
     {
-        if (File.Exists(Application.persistentDataPath + "/HighScores/highscores.xml"))
+        if (File.Exists(Application.persistentDataPath + "/Stat/PlayerStat.xml"))
         {
             XmlSerializer serializer = new XmlSerializer(typeof(Leaderboard));
-            FileStream stream = new FileStream(Application.persistentDataPath + "/HighScores/highscores.xml", FileMode.Open);
+            FileStream stream = new FileStream(Application.persistentDataPath + "/Stat/PlayerStat.xml", FileMode.Open);
             leaderboard = serializer.Deserialize(stream) as Leaderboard;
             stream.Close();
         }
@@ -44,5 +46,5 @@ public class XMLManager : MonoBehaviour
 [System.Serializable]
 public class Leaderboard
 {
-    public List<HighScoreEntry> list = new List<HighScoreEntry>();
+    public List<StatEntry> list = new List<StatEntry>();
 }
