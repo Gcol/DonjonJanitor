@@ -52,8 +52,7 @@ public class GameLogic : MonoBehaviour
     public List<StatEntry> allStat;
     public TMP_Text timeWin;
     public XMLManager mySave;
-    public TMP_Text textAreaRegister;
-    public GameObject registerArea; 
+
 
     //Animation de mort
     public Animator anim;
@@ -61,7 +60,6 @@ public class GameLogic : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        allStat = mySave.LoadStat();
         spawnerBodyList = GameObject.FindGameObjectsWithTag("SpawnerBody");
         spawnerDirtyList = GameObject.FindGameObjectsWithTag("SpawnerDirtyThing");
 
@@ -71,6 +69,7 @@ public class GameLogic : MonoBehaviour
 
     public void UpdateMissionTask()
     {
+        allStat = mySave.LoadStat();
         nbBodyText.text = nbBody.ToString();
         nbTaskText.text = nbTask.ToString();
 
@@ -78,11 +77,17 @@ public class GameLogic : MonoBehaviour
         {
             stopGame();
             UpdateTimer(timeWin, maxTimeLeft - timeLeft);
-            registerArea.SetActive(true);
+            AddStat("DonjonClean", 1);
+
+            mySave.SaveStat(allStat);
             winPannel.SetActive(true);
         }
     }
 
+    public void AddStat(string name, int xpGain)
+    {
+        mySave.UpdateStat(allStat, name, xpGain);
+    }
 
     public void Restart()
     {
@@ -114,6 +119,7 @@ public class GameLogic : MonoBehaviour
         Shuffle(spawnerDirtyList);
         Shuffle(spawnerBodyList);
 
+        mySave.SaveStat(allStat);
         foreach (GameObject respawn in spawnerDirtyList)
         {
             nbTask += 1;
@@ -161,6 +167,8 @@ public class GameLogic : MonoBehaviour
         if (timeLeft < 0)
         {
             stopGame();
+
+            mySave.SaveStat(allStat);
             gameOverPannel.SetActive(true);
             lose = true;
         }
@@ -172,7 +180,14 @@ public class GameLogic : MonoBehaviour
         int minutes = Mathf.FloorToInt((timeToUpdate + 1) / 60);
         int secondes = Mathf.FloorToInt((timeToUpdate + 1) % 60);
 
-        currentText.text = string.Format("{0 : 00} : {1 : 00}", minutes, secondes);
+        if (currentText == timeWin)
+        {
+            currentText.text = string.Format("You have win in : {0 : 00} : {1 : 00}", minutes, secondes);
+        }
+        else
+        {
+            currentText.text = string.Format("{0 : 00} : {1 : 00}", minutes, secondes);
+        }
     }
 
     public void Update()

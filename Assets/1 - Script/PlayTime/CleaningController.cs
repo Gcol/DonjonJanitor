@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CleaningController : MonoBehaviour
 {
-    public int healthBar = 255;
+    public int healthBar = 255; // Voir comment on veux gerer ca ?
     public Color ImageColor;
     public GameLogic gameCrtl;
 
@@ -35,6 +35,7 @@ public class CleaningController : MonoBehaviour
         {
             Destroy(gameObject);
             gameCrtl.nbTask -= 1;
+            gameCrtl.AddStat("BloodClean", healthBar);
             gameCrtl.UpdateMissionTask();
         }
     }

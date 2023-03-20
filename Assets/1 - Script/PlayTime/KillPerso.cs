@@ -10,6 +10,7 @@ public class KillPerso : MonoBehaviour
     {        
 	  if (collision.gameObject.tag == "Player")
         {
+            gameCrtl.AddStat("JanitorDead", 10);
             gameCrtl.RespawnPlayer();
         }
 
@@ -17,6 +18,7 @@ public class KillPerso : MonoBehaviour
         {
 		    Destroy(collision.gameObject);
             gameCrtl.nbBody -= 1;
+            gameCrtl.AddStat("BodyEliminate", 10); // as voir pour l'xp de supression (peux être en fonction de l'ennemie)
             gameCrtl.UpdateMissionTask();
 
         }
