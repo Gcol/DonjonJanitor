@@ -360,6 +360,7 @@ MonoBehaviour:
   - {fileID: 743349791128215076, guid: 4d7ad96c5783c09488d3c888b1bf39aa, type: 3}
   maxNbTask: 7
   maxNbBody: 3
+  difficulty: 1
   nbTask: 0
   nbBody: 0
   nbTaskText: {fileID: 852869604}
@@ -666,7 +667,7 @@ TilemapRenderer:
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
   m_SortOrder: 3
-  m_Mode: 0
+  m_Mode: 1
   m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
 --- !u!1839735485 &300553333
@@ -12241,7 +12242,7 @@ Tilemap:
   m_Origin: {x: -22, y: -19, z: -8}
   m_Size: {x: 31, y: 24, z: 11}
   m_TileAnchor: {x: 0, y: 0, z: 0}
-  m_TileOrientation: 0
+  m_TileOrientation: 6
   m_TileOrientationMatrix:
     e00: 1
     e01: 0
