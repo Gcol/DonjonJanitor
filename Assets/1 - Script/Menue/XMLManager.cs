@@ -18,7 +18,6 @@ public class XMLManager : MonoBehaviour
 
     void Awake()
     {
-        Debug.Log(Application.persistentDataPath + "/Stat/");
         if (!Directory.Exists(Application.persistentDataPath + "/Stat/"))
         {
             Directory.CreateDirectory(Application.persistentDataPath + "/Stat/");

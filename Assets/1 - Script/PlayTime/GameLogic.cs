@@ -27,6 +27,7 @@ public class GameLogic : MonoBehaviour
     public GameObject fadePannel;
 
 
+    // Gestion des mouvements
     public GameObject player;
 
 
@@ -42,6 +43,7 @@ public class GameLogic : MonoBehaviour
 
     public int maxNbTask = 7;
     public int maxNbBody = 3;
+    public int difficulty = 1;
     public int nbTask;
     public int nbBody;
     public TMP_Text nbTaskText;
@@ -69,7 +71,6 @@ public class GameLogic : MonoBehaviour
 
     public void UpdateMissionTask()
     {
-        allStat = mySave.LoadStat();
         nbBodyText.text = nbBody.ToString();
         nbTaskText.text = nbTask.ToString();
 
@@ -92,6 +93,7 @@ public class GameLogic : MonoBehaviour
     public void Restart()
     {
         RestartLevel();
+        allStat = mySave.LoadStat();
         timeLeft = maxTimeLeft;
 
         winPannel.SetActive(false);
@@ -113,13 +115,14 @@ public class GameLogic : MonoBehaviour
         CleanLevel();
         // As voir comment déterminer le max ?
 
-        int currentNbTask = Random.Range(3, maxNbTask);
-        int currentNbBody = Random.Range(1, maxNbBody);
+        // Ajout d'un premier test de diff
+
+        int currentNbTask = Random.Range(difficulty * 2, difficulty * 3);
+        int currentNbBody = Random.Range(difficulty, (difficulty + 1));
 
         Shuffle(spawnerDirtyList);
         Shuffle(spawnerBodyList);
 
-        mySave.SaveStat(allStat);
         foreach (GameObject respawn in spawnerDirtyList)
         {
             nbTask += 1;

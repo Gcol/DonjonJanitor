@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
     public float movementSpeed = 1f;
     public GameObject linkObject = null;
     public CleaningController cleanObject = null;
-    //IsometricCharacterRenderer isoRenderer;
+    IsometricCharacterRenderer isoRenderer;
 
     public bool playerActive = true;
 
@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
     {
         linkObject = null;
         rbody = GetComponent<Rigidbody2D>();
-        //isoRenderer = GetComponentInChildren<IsometricCharacterRenderer>();
+        isoRenderer = GetComponent<IsometricCharacterRenderer>();
     }
 
     // Update is called once per frame
@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
             }
             else if (linkObject != null) { linkObject = null; }
             Vector2 newPos = currentPos + movement * Time.fixedDeltaTime;
-            //isoRenderer.SetDirection(movement);
+            isoRenderer.SetDirection(movement);
             rbody.MovePosition(newPos);
         }
     }
