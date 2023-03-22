@@ -7,8 +7,8 @@ public class IsometricCharacterRenderer : MonoBehaviour
     // Start is called before the first frame update
 
 
-    public static readonly string[] staticDirection = { "Static N", "Static W", "Static S", "Static E" };
-    public static readonly string[] runDirection = { "Run N", "Run W", "Run S", "Run E" };
+    public static readonly string[] staticDirection = { "Static N", "Static NW", "Static W", "Static SW", "Static S", "Static SE", "Static E", "Static NE"};
+    public static readonly string[] runDirection = { "Run N", "Run NW", "Run W", "Run SW", "Run S", "Run SE", "Run E", "Run NE" };
 
     public float angle = 0f;
 
@@ -31,7 +31,7 @@ public class IsometricCharacterRenderer : MonoBehaviour
         else
         {
             directionArray = runDirection;
-            lastDirection = DirectionToIndex(direction, 4);
+            lastDirection = DirectionToIndex(direction, 8);
         }
 
         animator.Play(directionArray[lastDirection]);
@@ -57,6 +57,7 @@ public class IsometricCharacterRenderer : MonoBehaviour
         }
 
         float stepCount = angle / step;
+
 
         return Mathf.FloorToInt(stepCount);
     }
