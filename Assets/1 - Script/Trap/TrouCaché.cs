@@ -1,0 +1,31 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class TrouCaché : Trap
+{
+    public Sprite cleanTile;
+    public Sprite exposeTile;
+
+    void Awake()
+    {
+        deadType = "Chute";
+    }
+
+    void Reset()
+    {
+        Color currentcolor = GetComponent<SpriteRenderer>().color;
+        currentcolor.a = 1f;
+        GetComponent<SpriteRenderer>().color = currentcolor;
+    }
+
+    void OnCollisionExit2D(Collision2D collision)
+    {
+        if (activeTrap)
+        {
+            Color currentcolor = GetComponent<SpriteRenderer>().color;
+            currentcolor.a = 0f;
+            GetComponent<SpriteRenderer>().color = currentcolor;
+        }
+    }
+}

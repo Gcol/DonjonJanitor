@@ -11,6 +11,18 @@ public class PlayerController : MonoBehaviour
 
     public bool playerActive = true;
 
+    public GameObject littleBlood;
+    public GameObject stepBlood;
+
+
+    float timeBeforeBlood = 5f;
+    float timeLittleStep = 2f;
+
+    public float littleBloodTimer;
+    public float littleStepTimer;
+
+    public bool activeBloodStep;
+
     Rigidbody2D rbody;
 
     public void setCleanObject(CleaningController newCleanObject)
@@ -36,10 +48,25 @@ public class PlayerController : MonoBehaviour
             Vector2 inputVector = new Vector2(horizontalInput, verticalInput);
             inputVector = Vector2.ClampMagnitude(inputVector, 1);
             Vector2 movement = inputVector * movementSpeed;
+            if (activeBloodStep)
+            {
+                littleStepTimer -= Time.deltaTime;
+                if (littleStepTimer <= 0f)
+                {
+                    Instantiate(littleBlood, gameObject.transform.position, gameObject.transform.rotation);
+                    littleStepTimer = timeLittleStep;
+                }
+            }
             if (Input.GetButton("Jump"))
             {
                 if (linkObject)
                 {
+                    littleBloodTimer -= Time.deltaTime;
+                    if (littleBloodTimer <= 0f)
+                    {
+                        Instantiate(stepBlood, linkObject.transform.position, linkObject.transform.rotation);
+                        littleBloodTimer = timeBeforeBlood;
+                    }
                     movement = inputVector * movementSpeed / 2;
                     // On  ajout le poid de l'objet
 
@@ -73,6 +100,12 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag == "ToCleanObject")
         {
             cleanObject = collision.gameObject.GetComponent<CleaningController>();
+
+            if (activeBloodStep)
+            {
+                activeBloodStep = false;
+
+            }
         }
     }
 
@@ -82,6 +115,14 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.GetComponent<CleaningController>() == cleanObject)
         {
             cleanObject = null;
+            littleStepTimer = timeLittleStep;
+            Debug.Log(collision.gameObject.GetComponent<CleaningController>());
+            if (!activeBloodStep)
+            {
+                activeBloodStep = true;
+                littleStepTimer = timeLittleStep;
+
+            }
         }
     }
 

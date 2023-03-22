@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Trou : Trap
+public class Flamme : Trap
 {
     void Awake()
     {
-        deadType = "Chute";
+        deadType = "Flamme";
     }
 }

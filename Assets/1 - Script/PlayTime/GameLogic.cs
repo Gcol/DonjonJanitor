@@ -31,7 +31,7 @@ public class GameLogic : MonoBehaviour
     public GameObject player;
 
 
-    PlayerController playerCtr;
+    public PlayerController playerCtr;
 
     //Gestion des taches à effectuer
     private GameObject[] spawnerDirtyList;
@@ -58,6 +58,7 @@ public class GameLogic : MonoBehaviour
 
     //Animation de mort
     public Animator anim;
+    public Animator deadJanitorAnim;
 
     // Start is called before the first frame update
     void Start()
@@ -125,7 +126,6 @@ public class GameLogic : MonoBehaviour
 
         foreach (GameObject respawn in spawnerDirtyList)
         {
-            nbTask += 1;
             Instantiate(dirtyPrefabList[Random.Range(0, dirtyPrefabList.Length)], respawn.transform.position, respawn.transform.rotation);
             if (nbTask >= currentNbTask) { break; }
         }
@@ -237,16 +237,17 @@ public class GameLogic : MonoBehaviour
         }
     }
 
-    public void RespawnPlayer()
+    public void RespawnPlayer(string animationDeadBody)
     {
-        StartCoroutine(CoRoutineRespawnPlayer());
+        StartCoroutine(CoRoutineRespawnPlayer(animationDeadBody));
     }
 
-    IEnumerator CoRoutineRespawnPlayer()
+    IEnumerator CoRoutineRespawnPlayer(string animationDeadBody)
     {
         playerCtr.playerActive = false;
         fadePannel.SetActive(true);
         anim.Play("FadeOurt");
+        deadJanitorAnim.Play(animationDeadBody);
 
         yield return new WaitForSeconds(1.5f);
         player.GetComponent<Rigidbody2D>().position = spawn.position;

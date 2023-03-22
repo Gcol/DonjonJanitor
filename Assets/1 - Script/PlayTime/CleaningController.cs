@@ -11,17 +11,15 @@ public class CleaningController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         SpriteRenderer cur_object = GetComponent<SpriteRenderer>();
         ImageColor = cur_object.color;
         gameCrtl = GameObject.FindWithTag("GameController").GetComponent<GameLogic>();
 
+        gameCrtl.nbTask += 1;
+        gameCrtl.UpdateMissionTask();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void Decrease()
     {
@@ -37,6 +35,7 @@ public class CleaningController : MonoBehaviour
             gameCrtl.nbTask -= 1;
             gameCrtl.AddStat("BloodClean", healthBar);
             gameCrtl.UpdateMissionTask();
+            gameCrtl.playerCtr.activeBloodStep = false;
         }
     }
 
