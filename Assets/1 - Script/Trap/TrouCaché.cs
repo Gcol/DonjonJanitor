@@ -5,7 +5,6 @@ using UnityEngine;
 public class TrouCaché : Trap
 {
     public Sprite cleanTile;
-    public Sprite exposeTile;
 
     void Awake()
     {
