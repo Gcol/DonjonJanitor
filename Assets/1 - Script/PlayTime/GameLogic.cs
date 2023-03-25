@@ -36,9 +36,11 @@ public class GameLogic : MonoBehaviour
     //Gestion des taches à effectuer
     private GameObject[] spawnerDirtyList;
     private GameObject[] spawnerBodyList;
+    private GameObject[] spawnerExplosionList;
 
     public GameObject[] dirtyPrefabList;
     public GameObject[] monsterPrefabList;
+    public GameObject explosionPrefab;
 
 
     public int maxNbTask = 7;
@@ -65,6 +67,7 @@ public class GameLogic : MonoBehaviour
     {
         spawnerBodyList = GameObject.FindGameObjectsWithTag("SpawnerBody");
         spawnerDirtyList = GameObject.FindGameObjectsWithTag("SpawnerDirtyThing");
+        spawnerExplosionList = GameObject.FindGameObjectsWithTag("SpawnerExplosion");
 
         playerCtr = player.GetComponent<PlayerController>();
         Restart();
@@ -137,6 +140,11 @@ public class GameLogic : MonoBehaviour
             if (nbBody >= currentNbBody) { break; }
         }
 
+        foreach (GameObject respawn in spawnerExplosionList)
+        {
+            Instantiate(explosionPrefab, respawn.transform.position, respawn.transform.rotation);
+        }
+
         UpdateMissionTask();
         // peux être joué avec deux liste ?
     }
@@ -145,6 +153,14 @@ public class GameLogic : MonoBehaviour
     {
         DestroyFromTag("ToCleanObject");
         DestroyFromTag("MovingObject");
+
+        GameObject[] objectToReset;
+
+        objectToReset = GameObject.FindGameObjectsWithTag("NeedToCleanIfActivate");
+        foreach (GameObject currentObject in objectToReset)
+        {
+            currentObject.GetComponent<TrouCaché>().Reset();
+        }
     }
 
     void DestroyFromTag(string tag)

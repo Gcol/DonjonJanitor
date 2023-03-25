@@ -8,6 +8,11 @@ public class Trap : MonoBehaviour
     public string deadType;
     public bool activeTrap = true;
 
+    void Start()
+    {
+        gameCrtl = GameObject.FindWithTag("GameController").GetComponent<GameLogic>();
+    }
+
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (activeTrap)

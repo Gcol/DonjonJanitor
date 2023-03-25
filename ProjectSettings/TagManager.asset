@@ -8,6 +8,10 @@ TagManager:
   - ToCleanObject
   - SpawnerDirtyThing
   - SpawnerBody
+  - SpawnerInteractible
+  - UsedInteractible
+  - NeedToCleanIfActivate
+  - SpawnerExplosion
   layers:
   - Default
   - TransparentFX

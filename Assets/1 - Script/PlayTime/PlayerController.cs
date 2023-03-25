@@ -116,7 +116,6 @@ public class PlayerController : MonoBehaviour
         {
             cleanObject = null;
             littleStepTimer = timeLittleStep;
-            Debug.Log(collision.gameObject.GetComponent<CleaningController>());
             if (!activeBloodStep)
             {
                 activeBloodStep = true;

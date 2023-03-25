@@ -11,7 +11,7 @@ public class TrouCaché : Trap
         deadType = "Chute";
     }
 
-    void Reset()
+    public void Reset()
     {
         Color currentcolor = GetComponent<SpriteRenderer>().color;
         currentcolor.a = 1f;
