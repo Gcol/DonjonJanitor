@@ -57,6 +57,16 @@ public class PlayerController : MonoBehaviour
                     littleStepTimer = timeLittleStep;
                 }
             }
+            if (Input.GetButtonDown("Jump"))
+            {
+                Debug.Log("Appuie");
+
+            }
+            if (Input.GetButtonUp("Jump"))
+            {
+                Debug.Log("Sortie");
+
+            }
             if (Input.GetButton("Jump"))
             {
                 if (linkObject)

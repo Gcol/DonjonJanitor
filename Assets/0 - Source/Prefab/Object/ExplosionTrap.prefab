@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 650309323
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 33606b36104739d43a254ac114acff53, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 85d4fa1e38a43534c92b5b74b279b398, type: 3}
   m_Color: {r: 1, g: 0.92926645, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -104,7 +104,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.62, y: 0.71}
+    oldSize: {x: 30.000002, y: 25.004885}
     newSize: {x: 0.62, y: 0.71}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -140,8 +140,8 @@ MonoBehaviour:
   gameCrtl: {fileID: 0}
   deadType: 
   activeTrap: 1
-  cleanTile: {fileID: 21300000, guid: 33606b36104739d43a254ac114acff53, type: 3}
-  exploseTile: {fileID: 21300000, guid: 2b267d32d18f28949b2622969341933e, type: 3}
+  cleanTile: {fileID: 21300000, guid: 85d4fa1e38a43534c92b5b74b279b398, type: 3}
+  exploseTile: {fileID: 21300000, guid: eb46c0cdee8506147bec1e7f8e5cb938, type: 3}
 --- !u!114 &1413905134428012158
 MonoBehaviour:
   m_ObjectHideFlags: 0
