@@ -167,6 +167,7 @@ public class GameLogic : MonoBehaviour
     {
         GameObject[] objetToDestroy;
 
+        //Debug.Log("Destroy From Tag");
         objetToDestroy = GameObject.FindGameObjectsWithTag(tag);
         foreach (GameObject currentObject in objetToDestroy)
         {

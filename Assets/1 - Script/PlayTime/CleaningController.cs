@@ -31,6 +31,7 @@ public class CleaningController : MonoBehaviour
         }
         else
         {
+            //Debug.Log("Cleab Destroy");
             Destroy(gameObject);
             gameCrtl.nbTask -= 1;
             gameCrtl.AddStat("BloodClean", healthBar);
