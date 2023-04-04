@@ -30,7 +30,7 @@ public class Explosion : Trap
     {
         if (!GetComponent<PolygonCollider2D>().isTrigger && !activeTrap)
         {
-            // doit on changer ca ?
+            // doit on changer ca ? Regarde plus tard 
             GetComponent<PolygonCollider2D>().isTrigger = true;
         }
     }

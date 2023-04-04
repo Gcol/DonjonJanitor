@@ -24,6 +24,8 @@ public class CleaningController : MonoBehaviour
     public void Decrease()
     {
         ImageColor.a -= 0.01f;
+
+        // Changer par pourcentage sur la vie (comment faire d'une stat un %)
         if (ImageColor.a > 0 )
         {
             SpriteRenderer cur_object = GetComponent<SpriteRenderer>();
@@ -34,7 +36,7 @@ public class CleaningController : MonoBehaviour
             //Debug.Log("Cleab Destroy");
             Destroy(gameObject);
             gameCrtl.nbTask -= 1;
-            gameCrtl.AddStat("BloodClean", healthBar);
+            gameCrtl.AddStat("BloodClean", 1);
             gameCrtl.UpdateMissionTask();
             gameCrtl.playerCtr.activeBloodStep = false;
         }

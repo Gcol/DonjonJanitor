@@ -6,6 +6,7 @@ public class Stat : MonoBehaviour
     public StatDisplay[] statDisplayArray;
     public XMLManager mySave;
     public List<StatEntry> allStat;
+    public string[] ListStat;
 
     void Start()
     {
@@ -33,16 +34,9 @@ public class Stat : MonoBehaviour
 
     void UpdateDisplay()
     {
-        for (int i = 0; i < statDisplayArray.Length; i++)
+        foreach (StatEntry currentStat in allStat)
         {
-            if (i < allStat.Count)
-            {
-                statDisplayArray[i].DisplayStat(allStat[i].type, allStat[i].level, allStat[i].xp);
-            }
-            else
-            {
-                statDisplayArray[i].HideEntryDisplay();
-            }
+            statDisplayArray[System.Array.IndexOf(ListStat, currentStat.type)].DisplayStat(currentStat.type, currentStat.level, currentStat.xp);
         }
     }
 

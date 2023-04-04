@@ -21,9 +21,21 @@ public class Trap : MonoBehaviour
 
         if (activeTrap)
         {
+
+            if (deadType == "Explosion")
+            {
+                gameCrtl.AddStat("ExplosionCount", 1);
+            }
+
             if (collision.gameObject.tag == "Player")
             {
-                gameCrtl.AddStat("JanitorDead", 10);
+                gameCrtl.AddStat("JanitorDead", 1);
+
+                if (deadType == "Water")
+                {
+                    gameCrtl.AddStat("JanitorDrown", 1);
+                }
+
                 gameCrtl.RespawnPlayer(deadType);
             }
             else
@@ -37,9 +49,14 @@ public class Trap : MonoBehaviour
                 collisionToClean.gameObject.GetComponent<Animator>().Play(deadType);
                 StartCoroutine(Destroytimer(collisionToClean.gameObject));
                 gameCrtl.nbBody -= 1;
-                gameCrtl.AddStat("BodyEliminate", 10); // as voir pour l'xp de supression (peux �tre en fonction de l'ennemie)
+                gameCrtl.AddStat("BodyEliminate", 1); // as voir pour l'xp de supression (peux �tre en fonction de l'ennemie)
                 gameCrtl.UpdateMissionTask();
 
+
+                if (deadType == "Flamme")
+                {
+                    gameCrtl.AddStat("BodyBurn", 1);
+                }
             }
         }
     }
